@@ -31,7 +31,7 @@ public class UserRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // ONLY FOR TESTING
+    /// ONLY FOR TESTING
     @GetMapping(path = "")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<UserCS>> searchUser() {
