@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:chicken_ui/HttpService.dart';
+import './allViews.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -39,42 +40,63 @@ class _LoginViewState extends State<LoginView> {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
               return Column(
-                children: [
-                  TextField(
-                    controller: username,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    decoration: const InputDecoration(
-                      hintText: 'username'
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Center(
+                    child: SizedBox(
+                      width: 400,
+                      child: TextField(
+                        controller: username,
+                        enableSuggestions: false,
+                        autocorrect: false,
+                        decoration: const InputDecoration(
+                            hintText: 'Username'
+                        ),
+                      ),
                     ),
                   ),
-                  TextField(
-                    controller: password,
-                    obscureText: true,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    decoration: const InputDecoration(
-                        hintText: 'Password'
+                  Center(
+                    child: SizedBox(
+                      width: 400,
+                      child: TextField(
+                        controller: password,
+                        obscureText: true,
+                        enableSuggestions: false,
+                        autocorrect: false,
+                        decoration: const InputDecoration(
+                            hintText: 'Password'
+                        ),
+                      ),
                     ),
                   ),
-                  TextButton(
-                    onPressed: () async {
-                      final txtUsername = username.text;
-                      final txtPassword = password.text;
-                      try {
-                      // here you send user to api
-                      } catch (e) {
-                       // handle exception like user not found/wrong password
-                        print('Error occured:');
-                        print(e.runtimeType);
-                        print(e);
-                      }
-                    }, child: const Text('Login'),
-                  )
+                  Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(40),
+                      child: TextButton(
+                        onPressed: () async {
+                          final txtUsername = username.text;
+                          final txtPassword = password.text;
+                          try {
+                            // here you send user to api
+                            // make sure that the api return a user
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => const UserProfileView()),
+                            );
+                          } catch (e) {
+                            // handle exception like user not found/wrong password
+                            print('Error occured:');
+                            print(e.runtimeType);
+                            print(e);
+                          }
+                        }, child: const Text('Login'),
+                      ),
+                    ),
+                  ),
                 ],
               );
             default:
-              return Column(
+              return const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[

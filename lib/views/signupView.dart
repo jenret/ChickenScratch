@@ -1,3 +1,4 @@
+import 'package:chicken_ui/views/allViews.dart';
 import 'package:flutter/material.dart';
 import 'package:chicken_ui/HttpService.dart';
 
@@ -52,111 +53,162 @@ class _SignUpViewState extends State<SignUpView> {
             switch (snapshot.connectionState) {
               case ConnectionState.done:
                 return Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    TextField(
-                      controller: firstName,
-                      maxLength: 50,
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      decoration: const InputDecoration(
-                        hintText: 'First Name'
+                    Center(
+                      child: SizedBox(
+                        width: 400,
+                        child: TextField(
+                        controller: firstName,
+                        maxLength: 50,
+                        enableSuggestions: false,
+                        autocorrect: false,
+                        decoration: const InputDecoration(
+                            hintText: 'First Name'
+                        ),
+                      ),
                       ),
                     ),
-                    TextField(
-                      controller: lastName,
-                      maxLength: 50,
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      decoration: const InputDecoration(
-                          hintText: 'Last Name'
+                    Center(
+                      child: SizedBox(
+                        width: 400,
+                        child: TextField(
+                          controller: lastName,
+                          maxLength: 50,
+                          enableSuggestions: false,
+                          autocorrect: false,
+                          decoration: const InputDecoration(
+                              hintText: 'Last Name'
+                          ),
+                        ),
                       ),
                     ),
-                    Text(
-                      '${birthdate.month}/${birthdate.day}/${birthdate.year}',
+                    Center(
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(0, 30, 0, 10),
+                        child: Text(
+                          '${birthdate.month}/${birthdate.day}/${birthdate.year}',
+                        ),
+                      ),
                     ),
-                    ElevatedButton(
-                        onPressed: () async {
-                          final result = await showDatePicker(
+                    Center(
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(0, 10, 0, 30),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            final result = await showDatePicker(
                               context: context,
                               initialDate: birthdate,
                               firstDate: DateTime(1900),
                               lastDate: DateTime.now().add(
-                                  const Duration(days: 365 * 2),
+                                const Duration(days: 365 * 2),
                               ),
                               helpText: 'Select Birthdate',
                               fieldLabelText: 'Enter Birthdate',
                               errorFormatText: 'Invalid Date',
-                          );
+                            );
 
-                          if (result != null) {
-                            setState(() {
-                              birthdate = result;
-                            });
-                          }
-                        },
-                        child: const Text('Birthdate'),
-                    ),
-                    TextField(
-                      controller: username,
-                      maxLength: 50,
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      decoration: const InputDecoration(
-                          hintText: 'Username'
+                            if (result != null) {
+                              setState(() {
+                                birthdate = result;
+                              });
+                            }
+                          },
+                          child: const Text('Birthdate'),
+                        ),
                       ),
                     ),
-                    TextField(
-                      controller: displayname,
-                      maxLength: 50,
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      decoration: const InputDecoration(
-                          hintText: 'Display Name'
+                    Center(
+                      child: SizedBox(
+                        width: 400,
+                        child: TextField(
+                          controller: username,
+                          maxLength: 50,
+                          enableSuggestions: false,
+                          autocorrect: false,
+                          decoration: const InputDecoration(
+                              hintText: 'Username'
+                          ),
+                        ),
                       ),
                     ),
-                    TextField(
-                      controller: email,
-                      maxLength: 62,
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: const InputDecoration(
-                          hintText: 'Email'
+                    Center(
+                      child: SizedBox(
+                        width: 400,
+                        child: TextField(
+                          controller: displayname,
+                          maxLength: 50,
+                          enableSuggestions: false,
+                          autocorrect: false,
+                          decoration: const InputDecoration(
+                              hintText: 'Display Name'
+                          ),
+                        ),
                       ),
                     ),
-                    TextField(
-                      controller: password,
-                      obscureText: true,
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      decoration: const InputDecoration(
-                        hintText: 'Password'
+                    Center(
+                      child: SizedBox(
+                        width: 400,
+                        child: TextField(
+                          controller: email,
+                          maxLength: 62,
+                          enableSuggestions: false,
+                          autocorrect: false,
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: const InputDecoration(
+                              hintText: 'Email'
+                          ),
+                        ),
                       ),
                     ),
-                    TextButton(
-                      onPressed: () async {
-                        final txtFirstName = firstName.text;
-                        final txtLastName = lastName.text;
-                        final txtBirthdate = birthdate.toString();
-                        final txtUsername = username.text;
-                        final txtDisplayName = displayname.text;
-                        final txtEmail = email.text;
-                        final txtPassword = password.text;
-                        try {
-                        // here you send user to api
-                        } catch (e) {
-                          // handle exception
-                          //maybe weak pass, email/username in use, invalid email
-                          print('Error occured:');
-                          print(e.runtimeType);
-                          print(e);
-                        }
-                      }, child: const Text('Sign Up'),
-                    )
+                    Center(
+                      child: SizedBox(
+                        width: 400,
+                        child: TextField(
+                          controller: password,
+                          obscureText: true,
+                          enableSuggestions: false,
+                          autocorrect: false,
+                          decoration: const InputDecoration(
+                              hintText: 'Password'
+                          ),
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: Padding(
+                        padding: EdgeInsets.all(40),
+                        child: TextButton(
+                          onPressed: () async {
+                            final txtFirstName = firstName.text;
+                            final txtLastName = lastName.text;
+                            final txtBirthdate = birthdate.toString();
+                            final txtUsername = username.text;
+                            final txtDisplayName = displayname.text;
+                            final txtEmail = email.text;
+                            final txtPassword = password.text;
+                            try {
+                              // here you send user to api
+                              // make sure that the api return a user
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (context) => const UserProfileView()),
+                              );
+                            } catch (e) {
+                              // handle exception
+                              //maybe weak pass, email/username in use, invalid email
+                              print('Error occured:');
+                              print(e.runtimeType);
+                              print(e);
+                            }
+                          }, child: const Text('Sign Up'),
+                        ),
+                      ),
+                    ),
                   ],
                 );
               default:
-                return Column(
+                return const Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[

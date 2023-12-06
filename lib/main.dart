@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:chicken_ui/views/loginView.dart';
-import 'package:chicken_ui/views/signupView.dart';
+import 'package:chicken_ui/views/allViews.dart';
 
 void main() {
   runApp(
