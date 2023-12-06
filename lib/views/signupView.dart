@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:chicken_ui/HttpService.dart';
 
 class SignUpView extends StatefulWidget {
   const SignUpView({super.key});
@@ -10,11 +11,12 @@ class SignUpView extends StatefulWidget {
 class _SignUpViewState extends State<SignUpView> {
   late final TextEditingController firstName;
   late final TextEditingController lastName;
-  late DateTime birthdate;
+  DateTime birthdate = DateTime.now();
   late final TextEditingController username;
   late final TextEditingController displayname;
   late final TextEditingController email;
   late final TextEditingController password;
+  final HttpService httpService = HttpService();
 
   @override
   void initState() {
@@ -45,7 +47,7 @@ class _SignUpViewState extends State<SignUpView> {
         title: const Text('Sign Up'),
       ),
         body: FutureBuilder(
-          future: null,
+          future: httpService.checkConnected(),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.done:
@@ -68,6 +70,9 @@ class _SignUpViewState extends State<SignUpView> {
                       decoration: const InputDecoration(
                           hintText: 'Last Name'
                       ),
+                    ),
+                    Text(
+                      '${birthdate.month}/${birthdate.day}/${birthdate.year}',
                     ),
                     ElevatedButton(
                         onPressed: () async {
@@ -127,26 +132,48 @@ class _SignUpViewState extends State<SignUpView> {
                       decoration: const InputDecoration(
                         hintText: 'Password'
                       ),
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        final txtFirstName = firstName.text;
+                        final txtLastName = lastName.text;
+                        final txtBirthdate = birthdate.toString();
+                        final txtUsername = username.text;
+                        final txtDisplayName = displayname.text;
+                        final txtEmail = email.text;
+                        final txtPassword = password.text;
+                        try {
+                        // here you send user to api
+                        } catch (e) {
+                          // handle exception
+                          //maybe weak pass, email/username in use, invalid email
+                          print('Error occured:');
+                          print(e.runtimeType);
+                          print(e);
+                        }
+                      }, child: const Text('Sign Up'),
                     )
-                    // TextButton(
-                    //   onPressed: () async {
-                    //     final txtEmail = email.text;
-                    //     final txtPassword = password.text;
-                    //     try {
-                    //     // here you send user to api
-                    //     } catch (e) {
-                    //       // handle exception
-                    //       //maybe weak pass, email/username in use, invalid email
-                    //       print('Error occured:');
-                    //       print(e.runtimeType);
-                    //       print(e);
-                    //     }
-                    //   },
-                    // )
                   ],
                 );
               default:
-                return const Text('Loading');
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.greenAccent,
+                        backgroundColor: Colors.black12,
+                      ),
+                    ),
+                    Center(
+                      child: Padding(
+                        padding: EdgeInsets.all(15),
+                        child: Text('Loading...'),
+                      ),
+                    )
+                  ],
+                );
             }
           },
         )

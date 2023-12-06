@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:chicken_ui/HttpService.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -10,6 +11,7 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   late final TextEditingController username;
   late final TextEditingController password;
+  final HttpService httpService = HttpService();
 
   @override
   void initState() {
@@ -32,7 +34,7 @@ class _LoginViewState extends State<LoginView> {
         title: const Text('Login'),
       ),
       body: FutureBuilder(
-        future: null,
+        future: httpService.checkConnected(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
@@ -54,25 +56,42 @@ class _LoginViewState extends State<LoginView> {
                     decoration: const InputDecoration(
                         hintText: 'Password'
                     ),
+                  ),
+                  TextButton(
+                    onPressed: () async {
+                      final txtUsername = username.text;
+                      final txtPassword = password.text;
+                      try {
+                      // here you send user to api
+                      } catch (e) {
+                       // handle exception like user not found/wrong password
+                        print('Error occured:');
+                        print(e.runtimeType);
+                        print(e);
+                      }
+                    }, child: const Text('Login'),
                   )
-                  // TextButton(
-                  //   onPressed: () async {
-                  //     final txtEmail = email.text;
-                  //     final txtPassword = password.text;
-                  //     try {
-                  //     // here you send user to api
-                  //     } catch (e) {
-                  //      // handle exception like user not found/wrong password
-                  //       print('Error occured:');
-                  //       print(e.runtimeType);
-                  //       print(e);
-                  //     }
-                  //   },
-                  // )
                 ],
               );
             default:
-              return const Text('Loading');
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.greenAccent,
+                      backgroundColor: Colors.black12,
+                    ),
+                  ),
+                  Center(
+                    child: Padding(
+                    padding: EdgeInsets.all(15),
+                    child: Text('Loading...'),
+                    ),
+                  )
+                ],
+              );
           }
         },
       )

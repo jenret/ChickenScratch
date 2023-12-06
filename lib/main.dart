@@ -28,25 +28,41 @@ class MyHomePage extends StatelessWidget {
         centerTitle: true,
         title: Text(title),
       ),
-      body: const Center(
+      body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Column(children: <Widget>[
+              Container(
+                height: 250,
+                width: 250,
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 50),
+                  child: Image.asset('assets/images/ChickenScratchLogo.png'),
+                ),
+              ),
               SizedBox(height: 30,),
               ElevatedButton(
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => LoginView()),
+                      MaterialPageRoute(builder: (context) => const LoginView()),
                     );
                   },
-                  child: Text("Login")
+                  child: const Text("Login")
               ),
               SizedBox(height: 30,),
-              FilledButton(onPressed: null, child: Text("Sign Up")),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const SignUpView()),
+                    );
+                  },
+                  child: const Text("Sign Up")
+              ),
             ],)
           ],
         ),
