@@ -15,6 +15,17 @@ class _UserProfileViewState extends State<UserProfileView> {
   final HttpService httpService = HttpService();
 
   @override
+  void initState() {
+    user = UserModel(userUUID: '12345', username: 'wow', displayname: 'wow', profilePicturePath: '', bannerPicturePath: '');
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
@@ -23,6 +34,7 @@ class _UserProfileViewState extends State<UserProfileView> {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
               return Scaffold(
+                drawer: HamburgerBarMenuView(),
                 body: CustomScrollView(
                   slivers: [
                     SliverAppBar(
@@ -61,7 +73,7 @@ class _UserProfileViewState extends State<UserProfileView> {
                               '@${user.username}',
                               style: const TextStyle(
                                 fontSize: 17,
-                                color: Colors.greenAccent,
+                                color: Colors.blueGrey,
                               ),
                             )
                           ]
@@ -92,55 +104,6 @@ class _UserProfileViewState extends State<UserProfileView> {
               );
           }
         },
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.greenAccent,
-                ),
-                child: Text('Display Name'),
-            ),
-            ListTile(
-              title: const Text('Topics'),
-              onTap: () {
-                print('go to topics');
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Profile'),
-              onTap: () {
-                print('go to user profile');
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Settings'),
-              onTap: () {
-                print('go to settings');
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Logout'),
-              onTap: () {
-                print('end session');
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('New Note'),
-              onTap: () {
-                Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => CreateNoteView())
-                );
-              },
-            )
-          ],
-        ),
       ),
     );
   }

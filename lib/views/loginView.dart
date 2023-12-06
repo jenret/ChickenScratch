@@ -79,10 +79,8 @@ class _LoginViewState extends State<LoginView> {
                           try {
                             // here you send user to api
                             // make sure that the api return a user
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (context) => const UserProfileView()),
-                            );
+                            Navigator.pushAndRemoveUntil(context,
+                                MaterialPageRoute(builder: (context) => UserProfileView()), (Route<dynamic> route) => false);
                           } catch (e) {
                             // handle exception like user not found/wrong password
                             print('Error occured:');

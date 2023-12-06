@@ -192,7 +192,7 @@ class _SignUpViewState extends State<SignUpView> {
                               // make sure that the api return a user
                               Navigator.pushReplacement(
                                 context,
-                                MaterialPageRoute(builder: (context) => const UserProfileView()),
+                                MaterialPageRoute(builder: (context) => const LoginView()),
                               );
                             } catch (e) {
                               // handle exception
