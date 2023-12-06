@@ -1,9 +1,13 @@
 package jretana.topicservice.controller;
+import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.document.Table;
+import jretana.topicservice.config.DynamoDBConfig;
 import jretana.topicservice.model.TopicCS;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -11,18 +15,30 @@ import java.util.UUID;
 @RequestMapping("/topic")
 public class TopicRestController {
 
+    DynamoDBConfig dynamoDBConfig = new DynamoDBConfig();
+
     ///// GET
     @GetMapping(path = "/{topicUUID}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<TopicCS> searchTopic(@PathVariable(required = true) UUID topicUUID) {
         // find topic in db
-        return new ResponseEntity<>(HttpStatus.OK);
+        Table topicsTable = dynamoDBConfig.getDynamoDBTable("Topics");
+        Item topic = topicsTable.getItem("TopicUUID", topicUUID.toString());
+        TopicCS topicCS = new TopicCS();
+        topicCS.setTopicUUID(UUID.fromString(topic.getString("TopicUUID")));
+        topicCS.setTopicName(topic.getString("TopicName"));
+        return new ResponseEntity<TopicCS>(topicCS, HttpStatus.OK);
     }
 
     @GetMapping(path = "")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<TopicCS>> searchAllTopics() {
-        //List<UserCS> users = usersRepo.findAll();
+        //make list for topics to send
+        List<TopicCS> topicCSList = new ArrayList<>();
+        //get table in db
+        Table topicsTable = dynamoDBConfig.getDynamoDBTable("Topics");
+        //populate list
+        
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

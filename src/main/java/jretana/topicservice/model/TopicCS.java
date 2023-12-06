@@ -1,6 +1,7 @@
 package jretana.topicservice.model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class TopicCS {
@@ -9,12 +10,12 @@ public class TopicCS {
 
     private String topicName;
 
-    private ArrayList<UserCS> topicAdmins;
+    private List<UserCS> topicAdmins = new ArrayList<>();
 
     public TopicCS() {
     }
 
-    public TopicCS(UUID topicUUID, String topicName, ArrayList<UserCS> topicAdmins) {
+    public TopicCS(UUID topicUUID, String topicName, List<UserCS> topicAdmins) {
         this.topicUUID = topicUUID;
         this.topicName = topicName;
         this.topicAdmins = topicAdmins;
@@ -36,11 +37,11 @@ public class TopicCS {
         this.topicName = topicName;
     }
 
-    public ArrayList<UserCS> getTopicAdmins() {
+    public List<UserCS> getTopicAdmins() {
         return topicAdmins;
     }
 
-    public void setTopicAdmins(ArrayList<UserCS> topicAdmins) {
+    public void setTopicAdmins(List<UserCS> topicAdmins) {
         this.topicAdmins = topicAdmins;
     }
 }
